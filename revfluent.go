@@ -43,8 +43,20 @@ func Init() {
 
     revel.INFO.Printf("Connecting Fluentd: %s:%i", host, port)
 
-    Logger, err := fluent.New(config)
+    Logger, err = fluent.New(config)
     if err != nil {
         revel.ERROR.Panic("Failed to connect Fluentd: %s", err)
     }
+}
+
+func LOGE(message interface{}) {
+    Logger.Post("E", message)
+}
+
+func LOGD(message interface{}) {
+    Logger.Post("D", message)
+}
+
+func LOGI(message interface{}) {
+    Logger.Post("I", message)
 }
