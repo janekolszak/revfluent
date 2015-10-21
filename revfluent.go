@@ -1,9 +1,9 @@
 package revfluent
 
 import (
-    "fmt"
     "github.com/fluent/fluent-logger-golang/fluent"
     "github.com/revel/revel"
+    "time"
 )
 
 var (
@@ -12,19 +12,22 @@ var (
 
 // Reads configuration and connects to fluentd
 func Init() {
-    timeout, err := time.ParseDuration(revel.Config.StringDefault("revfluent.timeout", fluent.defaultTimeout.String()))
+    timeString, _ := revel.Config.String("revfluent.timeout")
+    timeout, err := time.ParseDuration(timeString)
     if err != nil {
         revel.ERROR.Panic(err)
     }
 
-    port := revel.Config.IntDefault("revfluent.port", fluent.defaultPort)
-    host := revel.Config.StringDefault("revfluent.host", fluent.defaultHost)
-    network := revel.Config.StringDefault("revfluent.network", fluent.defaultNetwork)
-    socketPath := revel.Config.StringDefault("revfluent.socketPath", fluent.defaultSocketPath)
-    bufferLimit := revel.Config.IntDefault("revfluent.bufferLimit", fluent.defaultBufferLimit)
-    retryWait := revel.Config.IntDefault("revfluent.retryWait", fluent.defaultRetryWait)
-    maxRetry := revel.Config.IntDefault("revfluent.maxRetry", fluent.defaultMaxRetry)
-    tagPrefix := revel.Config.StringDefault("revfluent.tagPrefix", revel.Config.String("app.name"))
+    port, _ := revel.Config.Int("revfluent.port")
+    host, _ := revel.Config.String("revfluent.host")
+    network, _ := revel.Config.String("revfluent.network")
+    socketPath, _ := revel.Config.String("revfluent.socketPath")
+    bufferLimit, _ := revel.Config.Int("revfluent.bufferLimit")
+    retryWait, _ := revel.Config.Int("revfluent.retryWait")
+    maxRetry, _ := revel.Config.Int("revfluent.maxRetry")
+
+    appName, _ := revel.Config.String("app.name")
+    tagPrefix := revel.Config.StringDefault("revfluent.tagPrefix", appName)
 
     config := fluent.Config{
         FluentPort:       port,
