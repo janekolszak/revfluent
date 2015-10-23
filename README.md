@@ -1,4 +1,4 @@
-# revfluentd
+# revfluentd [![Build Status](https://travis-ci.org/janekolszak/revfluent.svg?branch=master)](https://travis-ci.org/janekolszak/revfluent)
 Fluentd logging for Revel framework
 
 ### Installation
