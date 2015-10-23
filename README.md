@@ -7,7 +7,8 @@ Fluentd logging for Revel framework
 ```
 ### Test
 ``` bash
-    revel test github.com/janekolszak/revfluent/testapp dev
+    fluentd -c fluent.conf &;
+    revel test github.com/janekolszak/revfluent/testapp dev;
 ```
 ### Configuration
 In app.conf:

@@ -1,21 +1,25 @@
 package tests
 
-import "github.com/revel/revel/testing"
+import (
+    "github.com/janekolszak/revfluent"
+    "github.com/revel/revel/testing"
+)
 
 type AppTest struct {
-	testing.TestSuite
+    testing.TestSuite
 }
 
-func (t *AppTest) Before() {
-	println("Set up")
+func (t *AppTest) TestLOGE() {
+    data := map[string]string{"message": "Error"}
+    revfluent.LOGE(data)
 }
 
-func (t *AppTest) TestThatIndexPageWorks() {
-	t.Get("/")
-	t.AssertOk()
-	t.AssertContentType("text/html; charset=utf-8")
+func (t *AppTest) TestLOGD() {
+    data := map[string]string{"message": "Debug"}
+    revfluent.LOGD(data)
 }
 
-func (t *AppTest) After() {
-	println("Tear down")
+func (t *AppTest) TestLOGI() {
+    data := map[string]string{"message": "Info"}
+    revfluent.LOGI(data)
 }

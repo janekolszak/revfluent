@@ -12,10 +12,14 @@ var (
 
 // Reads configuration and connects to fluentd
 func Init() {
-    timeString, _ := revel.Config.String("revfluent.timeout")
-    timeout, err := time.ParseDuration(timeString)
-    if err != nil {
-        revel.ERROR.Panic(err)
+    var err error
+    var timeout time.Duration = 0
+    timeString, exists := revel.Config.String("revfluent.timeout")
+    if exists {
+        timeout, err = time.ParseDuration(timeString)
+        if err != nil {
+            revel.ERROR.Panic(err)
+        }
     }
 
     port, _ := revel.Config.Int("revfluent.port")
@@ -41,7 +45,16 @@ func Init() {
         TagPrefix:        tagPrefix,
     }
 
-    revel.INFO.Printf("Connecting Fluentd: %s:%i", host, port)
+    var hostUsed string
+    if hostUsed = host; host == "" {
+        hostUsed = "127.0.0.1"
+    }
+
+    var portUsed int
+    if portUsed = port; port == 0 {
+        portUsed = 24224
+    }
+    revel.INFO.Printf("Connecting Fluentd: %s:%d", hostUsed, portUsed)
 
     Logger, err = fluent.New(config)
     if err != nil {
