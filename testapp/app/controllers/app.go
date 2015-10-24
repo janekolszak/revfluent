@@ -12,6 +12,6 @@ type App struct {
 func (c App) Index() revel.Result {
 
     data := map[string]string{"src": "App", "message": "Info message from the App"}
-    log.LOGI(data)
+    log.Info(data)
     return c.Render()
 }

@@ -1,7 +1,7 @@
 package tests
 
 import (
-    "github.com/janekolszak/revfluent"
+    log "github.com/janekolszak/revfluent"
     "github.com/revel/revel/testing"
 )
 
@@ -9,17 +9,27 @@ type AppTest struct {
     testing.TestSuite
 }
 
-func (t *AppTest) TestLOGE() {
+func (t *AppTest) TestError() {
     data := map[string]string{"message": "Error"}
-    revfluent.LOGE(data)
+    log.Error(data)
 }
 
-func (t *AppTest) TestLOGD() {
+func (t *AppTest) TestDebug() {
     data := map[string]string{"message": "Debug"}
-    revfluent.LOGD(data)
+    log.Debug(data)
 }
 
-func (t *AppTest) TestLOGI() {
+func (t *AppTest) TestInfo() {
     data := map[string]string{"message": "Info"}
-    revfluent.LOGI(data)
+    log.Info(data)
+}
+
+func (t *AppTest) TestLog() {
+    data := map[string]string{"message": "Log"}
+    log.Log("tag", data)
+}
+
+func (t *AppTest) TestLogger() {
+    data := map[string]string{"message": "Logger"}
+    log.Logger.Post("tag", data)
 }

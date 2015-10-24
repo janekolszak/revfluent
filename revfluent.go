@@ -72,14 +72,18 @@ func Init() {
     }
 }
 
-func LOGE(message interface{}) {
+func Error(message interface{}) {
     Logger.Post("E", message)
 }
 
-func LOGD(message interface{}) {
+func Debug(message interface{}) {
     Logger.Post("D", message)
 }
 
-func LOGI(message interface{}) {
+func Info(message interface{}) {
     Logger.Post("I", message)
+}
+
+func Log(tag string, message interface{}) {
+    Logger.Post(tag, message)
 }
