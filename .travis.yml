@@ -2,6 +2,7 @@ language: go
 go:
   - 1.3
   - 1.4
+  - 1.5
 
 before_install:
  - gem install fluentd --no-ri --no-rdoc
