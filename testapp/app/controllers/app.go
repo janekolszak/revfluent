@@ -1,11 +1,17 @@
 package controllers
 
-import "github.com/revel/revel"
+import (
+    log "github.com/janekolszak/revfluent"
+    "github.com/revel/revel"
+)
 
 type App struct {
-	*revel.Controller
+    *revel.Controller
 }
 
 func (c App) Index() revel.Result {
-	return c.Render()
+
+    data := map[string]string{"src": "App", "message": "Info message from the App"}
+    log.LOGI(data)
+    return c.Render()
 }

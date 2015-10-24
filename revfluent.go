@@ -14,12 +14,23 @@ var (
 func Init() {
     var err error
     var timeout time.Duration = 0
-    timeString, exists := revel.Config.String("revfluent.timeout")
+    timeStr, exists := revel.Config.String("revfluent.timeout")
     if exists {
-        timeout, err = time.ParseDuration(timeString)
+        timeout, err = time.ParseDuration(timeStr)
         if err != nil {
             revel.ERROR.Panic(err)
         }
+    }
+
+    var retryWait int = 0
+    retryWaitStr, exists := revel.Config.String("revfluent.retryWait")
+    if exists {
+        tmp, err := time.ParseDuration(retryWaitStr)
+        if err != nil {
+            revel.ERROR.Panic(err)
+        }
+
+        retryWait = int(tmp.Nanoseconds() / 1e6)
     }
 
     port, _ := revel.Config.Int("revfluent.port")
@@ -27,7 +38,6 @@ func Init() {
     network, _ := revel.Config.String("revfluent.network")
     socketPath, _ := revel.Config.String("revfluent.socketPath")
     bufferLimit, _ := revel.Config.Int("revfluent.bufferLimit")
-    retryWait, _ := revel.Config.Int("revfluent.retryWait")
     maxRetry, _ := revel.Config.Int("revfluent.maxRetry")
 
     appName, _ := revel.Config.String("app.name")
